@@ -55,6 +55,7 @@ print "   Start training...  "
 print "----------------------"
 
 batch_size = 20
+errores = []
 
 for step in xrange(1000):
     for jj in xrange(len(x_data) / batch_size):
@@ -64,13 +65,13 @@ for step in xrange(1000):
         sess.run(train, feed_dict={x: batch_xs, y_: batch_ys})
         if step % 50 == 0:
             error = sess.run(cross_entropy, feed_dict={x: batch_xs, y_: batch_ys})
-
+            errores.append(error)
             print "Iteration #:", step, "Error: ", error
             result = sess.run(y, feed_dict={x: batch_xs})
             for b, r in zip(batch_ys, result):
                 print b, "-->", r
             print "----------------------------------------------------------------------------------"
-            plt.plot(step, error, 'bo')
+            plt.plot(errores)
 
 plt.show()
 
